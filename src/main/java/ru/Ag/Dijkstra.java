@@ -15,28 +15,20 @@ public class Dijkstra {
         dictance = new int[numberOfVertices];
         vertices = new int[numberOfVertices];
         path = new int[numberOfVertices];
-    }
+        int infinity = 2147483647;
 
-    public void matrixInitialization() {
-        int maxValue = 2147483646;
-        Scanner sc = new Scanner(System.in);
-
-        System.out.print("Number of vertices: ");
-        setNumberOfVertices(sc.nextInt());
-
-        System.out.println("Distance between");
         for (int i = 0; i < numberOfVertices; i++) {
-            for (int j = 0; j < numberOfVertices; j++) {
-                if (i != j) {
-                    System.out.print((i + 1) + " " + (j + 1) + ": ");
-                    linkMatrix[i][j] = sc.nextInt();
-                } else {
-                    linkMatrix[i][j] = 0;
-                }
-            }
-            dictance[i] = maxValue;
+            dictance[i] = infinity;
             vertices[i] = 1;
         }
+    }
+
+
+    public void addDistance(int i, int j, int tempDistance) {
+        linkMatrix[i][j] = tempDistance;
+    }
+
+    public void printMatrix() {
         for (int i = 0; i < numberOfVertices; i++) {
             for (int j = 0; j < numberOfVertices; j++) {
                 System.out.print(linkMatrix[i][j] + " ");
@@ -45,14 +37,15 @@ public class Dijkstra {
         }
     }
 
+
     public void start() {
-        int maxValue = 2147483646;
+        int infinity = 2147483647;
         int startIndex = 0;
         int minIndex, min;
         dictance[startIndex] = 0;
         do {
-            minIndex = maxValue;
-            min = maxValue;
+            minIndex = infinity;
+            min = infinity;
 
             for (int i = 0; i < numberOfVertices; i++) {
                 if (vertices[i] == 1 && dictance[i] < min) {
@@ -61,7 +54,7 @@ public class Dijkstra {
                 }
             }
 
-            if (minIndex != maxValue) {
+            if (minIndex != infinity) {
                 for (int i = 0; i < numberOfVertices; i++) {
                     if (linkMatrix[minIndex][i] > 0) {
                         int temp = min + linkMatrix[minIndex][i];
@@ -71,7 +64,7 @@ public class Dijkstra {
                 }
                 vertices[minIndex] = 0;
             }
-        } while (minIndex < maxValue);
+        } while (minIndex < infinity);
 
         int end = numberOfVertices - 2;
         path[0] = end + 1;
